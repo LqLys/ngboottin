@@ -1,0 +1,87 @@
+{
+  "configs": [
+    {
+      "id": 1,
+      "API_DOMAIN": "http://locahost:3000"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "jacek",
+      "username": "jacek",
+      "password": "admin",
+      "email": "jacek@wp.pl"
+    },
+    {
+      "id": 2,
+      "name": "placek",
+      "username": "placek",
+      "password": "admin",
+      "email": "placek@wp.pl"
+    },
+    {
+      "name": "Janek",
+      "username": "Dzbanek",
+      "password": "123",
+      "email": "janek@wp.pl",
+      "id": 3
+    },
+    {
+      "name": "ttr",
+      "username": "ww",
+      "password": "w",
+      "email": "w",
+      "id": 4
+    },
+    {
+      "name": "stefan",
+      "username": "marcepan",
+      "password": "Qwert123|",
+      "email": "stefan@gmail.com",
+      "id": 5
+    }
+  ],
+  "trip": [
+    {
+      "id": 1,
+      "name": "Barcelona trip",
+      "destination": "Barcelona",
+      "startDate": "2019-01-01",
+      "endDate": "2019-01-01"
+    },
+    {
+      "id": 2,
+      "name": "Warsaw trip",
+      "destination": "Warsaw",
+      "startDate": "2019-01-01",
+      "endDate": "2019-01-01"
+    },
+    {
+      "id": 3,
+      "name": "Paris trip",
+      "destination": "Paris",
+      "startDate": "2019-01-01",
+      "endDate": "2019-01-01"
+    },
+    {
+      "id": 4,
+      "name": "NY trip",
+      "destination": "NY",
+      "startDate": "2019-01-01",
+      "endDate": "2019-01-01"
+    }
+  ],
+  "trip_user": [
+    {
+      "userId": 1,
+      "tripId": 1,
+      "participation": 50
+    },
+    {
+      "userId": 1,
+      "tripId": 2,
+      "participation": 50
+    }
+  ]
+}

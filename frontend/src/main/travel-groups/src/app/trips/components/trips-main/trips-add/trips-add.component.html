@@ -1,0 +1,141 @@
+<div class="row">
+  <div class="col-1">
+    <h3>Create new trip</h3>
+    <form [formGroup]="tripForm" (submit)="onSubmit()">
+      <div>
+        <label>Name</label><br>
+        <input formControlName="name"
+               [ngClass]="{'is-invalid': tripForm.controls.name.errors && tripForm.controls.name.touched}"/>
+        <div *ngIf="tripForm.controls.name.errors && tripForm.controls.name.touched">
+          <div>
+          <span *ngIf="tripForm.controls.name.errors.required"
+                class="error-span">
+            Name is required
+          </span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <label>Destination</label><br>
+        <input formControlName="destination"
+               [ngClass]="{'is-invalid': tripForm.controls.destination.errors && tripForm.controls.destination.touched}"/>
+        <div *ngIf="tripForm.controls.destination.errors && tripForm.controls.destination.touched">
+          <div>
+          <span *ngIf="tripForm.controls.destination.errors.required"
+                class="error-span">
+            Destination is required
+          </span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <label>Start date</label><br>
+        <input formControlName="startDate" (blur)="compareTwoDates()" type="date" style="width: 100%;"
+               [ngClass]="{'is-invalid': tripForm.controls.startDate.errors && tripForm.controls.startDate.touched}"/>
+        <div *ngIf="tripForm.controls.startDate.errors && tripForm.controls.startDate.touched">
+          <div>
+          <span *ngIf="tripForm.controls.startDate.errors.required"
+                class="error-span">
+            Start date is required
+          </span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <label>End date</label><br>
+        <input formControlName="endDate" (blur)="compareTwoDates()" type="date" style="width: 100%;"
+               [ngClass]="{'is-invalid': datesError.isError || tripForm.controls.endDate.errors && tripForm.controls.endDate.touched}"/>
+        <div *ngIf=" datesError.isError || tripForm.controls.endDate.errors && tripForm.controls.endDate.touched">
+          <div *ngIf="tripForm.controls.endDate.errors">
+          <span *ngIf="tripForm.controls.endDate.errors.required"
+                class="error-span">
+            Start date is required
+          </span>
+          </div>
+          <div>
+          <span *ngIf="datesError.isError"
+                class="error-span">
+            {{datesError.errorMessage}}
+          </span>
+          </div>
+        </div>
+      </div>
+
+      <button [ngClass]="tripForm.invalid  || datesError.isError ? 'button-invalid' : 'button'"
+              type="submit" [disabled]="tripForm.invalid  || datesError.isError">Create</button>
+      <p>
+          <span *ngIf="tripForm.invalid && tripForm.touched"
+                class="error-span">
+            Form is invalid
+          </span>
+      </p>
+    </form>
+  </div>
+  <div style="grid-column: 3/8">
+    <div *ngIf="invitedUsers  as tr">
+      <p-table #dt [columns]="cols" [value]="tr" [paginator]="true" [rows]="10" >
+        <ng-template pTemplate="caption">
+          <div style="text-align: right">
+            <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+            <input style="max-width: 100%" type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">
+              {{col.header}}
+            </th>
+          </tr>
+          <tr>
+            <th *ngFor="let col of columns" [ngSwitch]="col.field">
+              <input *ngSwitchCase="'username'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'contains')">
+              <input *ngSwitchCase="'email'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'contains')">
+
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns">
+              <div *ngIf="col.field === 'actions'">
+                <button pButton label="Remove" (click)="onGroupUninvite(rowData['id'])"></button>
+              </div>
+              {{rowData[col.field]}}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+
+  <div style="grid-column: 9/12">
+    <div *ngIf="users$ | async  as tr">
+      <p-table #dt [columns]="cols" [value]="tr" [paginator]="true" [rows]="10" >
+
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">
+              {{col.header}}
+            </th>
+          </tr>
+          <tr>
+            <th *ngFor="let col of columns" [ngSwitch]="col.field">
+              <input *ngSwitchCase="'username'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'contains')">
+              <input *ngSwitchCase="'email'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'contains')">
+
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns">
+              <div *ngIf="col.field === 'actions'">
+                <button pButton label="Invite" (click)="onGroupInvite(rowData['id'])"></button>
+              </div>
+              {{rowData[col.field]}}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+  </div>
+</div>

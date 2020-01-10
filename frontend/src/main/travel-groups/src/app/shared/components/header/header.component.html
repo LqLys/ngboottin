@@ -1,0 +1,12 @@
+<nav>
+  <ul>
+    <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><a routerLink="">Home</a></li>
+    <li routerLinkActive="active"><a routerLink="/trips">Trips</a></li>
+    <li routerLinkActive="active" ><a routerLink="/expenses">Expenses</a></li>
+    <li *ngIf="authService.isAdmin()" routerLinkActive="active" ><a routerLink="/admin">Admin Panel</a></li>
+    <li *ngIf="!authService.isLoggedIn()" style="float:right"><a routerLink="/login">Login</a></li>
+    <li *ngIf="authService.isLoggedIn()" style="float:right" (click)="logout()" class="aa">Logout</li>
+    <li *ngIf="!authService.isLoggedIn()" style="float:right"><a routerLink="/register">Register</a></li>
+  </ul>
+</nav>
+

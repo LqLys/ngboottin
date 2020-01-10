@@ -1,0 +1,50 @@
+/*ul {*/
+/*  list-style-type: none;*/
+/*  margin: 0;*/
+/*  padding: 0;*/
+/*  overflow: hidden;*/
+/*  background-color: #007ad9;*/
+/*}*/
+
+/*li {*/
+/*  float: left;*/
+
+/*}*/
+
+/*li a {*/
+/*  display: block;*/
+/*  color: white;*/
+/*  text-align: center;*/
+/*  padding: 14px 16px;*/
+/*  text-decoration: none;*/
+/*}*/
+
+/*!* Change the link color to #111 (black) on hover *!*/
+/*li a:hover {*/
+/*  background-color: #46a1e8;*/
+/*}*/
+
+/*.active {*/
+/*  font-weight: bold;*/
+/*}*/
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  background-color: #f1f1f1;
+}
+
+li a {
+  display: block;
+  color: #000;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color on hover */
+li a:hover {
+  background-color: #555;
+  color: white;
+}

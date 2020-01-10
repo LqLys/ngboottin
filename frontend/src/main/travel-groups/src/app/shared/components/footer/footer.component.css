@@ -1,0 +1,18 @@
+#container {
+  display: flex;
+  justify-content: space-around;
+}
+
+#container > div {
+  color: white;
+  font-size: x-small;
+
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: #007ad9;
+  height: 5%;
+}

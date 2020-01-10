@@ -1,0 +1,96 @@
+<div *ngIf="users$ | async as ca">
+<p-table #dt [columns]="cols" [value]="ca" [paginator]="true" [rows]="10" >
+  <ng-template pTemplate="caption">
+    <div style="text-align: right">
+      <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+      <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns">
+        {{col.header}}
+      </th>
+    </tr>
+    <tr>
+      <th *ngFor="let col of columns" [ngSwitch]="col.field">
+        <input *ngSwitchCase="'id'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'contains')">
+        <input *ngSwitchCase="'name'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'contains')">
+        <input *ngSwitchCase="'username'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'contains')">
+        <input *ngSwitchCase="'email'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'contains')">
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr [pSelectableRow]="rowData">
+      <td *ngFor="let col of columns">
+        <div *ngIf="col.field === 'actions'">
+          <button pButton label="Edit" (click)="onEdit(rowData['id'])" class="mainbtn"></button> |
+          <button pButton label="Delete" (click)="onDelete(rowData['id'])" class="ui-button-danger"></button>
+        </div>
+        {{rowData[col.field]}}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+</div>
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--<table>-->
+      <!--<tr>-->
+        <!--<td><input type="text" placeholder="Filter id" class="col-1" style="width: 50%"></td>-->
+        <!--<td><input type="text" placeholder="Filter name" class="col-2"></td>-->
+        <!--<td><input type="text" placeholder="Filter username" class="col-3" style=""></td>-->
+        <!--<td><input type="text" placeholder="Filter email" class="col-6"></td>-->
+      <!--</tr>-->
+      <!--<tr>-->
+        <!--<th>Id</th>-->
+        <!--<th>Name</th>-->
+        <!--<th>Username</th>-->
+        <!--<th>Email</th>-->
+        <!--<th></th>-->
+        <!--<th></th>-->
+      <!--</tr>-->
+      <!--<tr *ngFor="let user of users$ | async">-->
+        <!--<td>{{user.id}}</td>-->
+        <!--<td>{{user.name}}</td>-->
+        <!--<td>{{user.username}}</td>-->
+        <!--<td>{{user.email}}</td>-->
+        <!--<td (click)="onEdit(user.id)">Edit</td>-->
+        <!--<td (click)="onDelete(user.id)">Delete</td>-->
+      <!--</tr>-->
+
+    <!--</table>-->
+    <!--<div class="row" style="margin-top: 20px;">-->
+      <!--<button class="col-1 btn-pagination"><i class="arrow left"></i> Previous</button>-->
+      <!--<div class="pagination" style="grid-column: 6/9; margin-left: 20%">-->
+
+        <!--<a href="#" class="active">1</a>-->
+        <!--<a href="#">2</a>-->
+        <!--<a href="#">3</a>-->
+
+      <!--</div>-->
+
+      <!--<button class="col-12 btn-pagination">Next <i class="arrow right"></i></button>-->
+    <!--</div>-->
+
+

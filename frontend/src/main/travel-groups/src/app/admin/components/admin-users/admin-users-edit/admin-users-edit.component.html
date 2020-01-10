@@ -1,0 +1,119 @@
+<div class="row">
+  <div style="grid-column: 5/7">
+    <h3>Edit user</h3>
+    <form [formGroup]="userForm" (submit)="onSubmit()">
+      <div>
+        <label>Name</label><br>
+        <input formControlName="name"
+               [ngClass]="{'is-invalid': userForm.controls.name.errors && userForm.controls.name.touched}"/>
+        <div *ngIf="userForm.controls.name.errors && userForm.controls.name.touched">
+          <div>
+          <span *ngIf="userForm.controls.name.errors.required"
+                class="error-span">
+            Name is required
+          </span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <label>Username</label><br>
+        <input formControlName="username"
+               [ngClass]="{'is-invalid': userForm.controls.username.errors && userForm.controls.username.touched}"/>
+        <div *ngIf="userForm.controls.username.errors && userForm.controls.username.touched">
+          <div>
+          <span *ngIf="userForm.controls.username.errors.required"
+                class="error-span">
+            Username is required
+          </span>
+          </div>
+          <div>
+          <span *ngIf="userForm.controls.username.errors.minlength"
+                class="error-span">
+            At least 3 chars required
+          </span>
+          </div>
+          <div>
+          <span *ngIf="userForm.controls.username.errors.usernameTaken"
+                class="error-span">
+            Username is taken
+          </span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div><label>Email address</label></div>
+        <div><input formControlName="email"
+                    [ngClass]="{'is-invalid': userForm.controls.email.errors && userForm.controls.email.touched}"/></div>
+        <div *ngIf="userForm.controls.email.errors && userForm.controls.email.touched">
+          <div>
+          <span *ngIf="userForm.controls.email.errors.required"
+                class="error-span">
+            Email is required
+          </span>
+          </div>
+          <div>
+          <span *ngIf="userForm.controls.email.errors.email"
+                class="error-span">
+            Email must be a valid email address
+          </span>
+          </div>
+        </div>
+      </div>
+
+      <button  [ngClass]="userForm.invalid ? 'button-invalid' : 'button'" type="submit"
+              [disabled]="userForm.invalid">Save changes
+      </button>
+      <p>
+          <span *ngIf="userForm.invalid && userForm.touched"
+                class="error-span">
+            Form is invalid
+          </span>
+      </p>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div style="grid-column: 5/7">
+    <h3>Change password</h3>
+    <form [formGroup]="passwordForm" (submit)="onPasswordChange()">
+      <div>
+        <div><label>Old Password</label></div>
+        <input formControlName="oldPassword" type="password"/>
+      </div>
+
+      <div>
+        <label>New Password</label><br>
+        <input formControlName="newPassword" type="password"
+               [ngClass]="{'is-invalid': passwordForm.controls.newPassword.errors && passwordForm.controls.newPassword.touched}"/>
+        <div *ngIf="passwordForm.controls.newPassword.errors && passwordForm.controls.newPassword.touched">
+          <div>
+          <span *ngIf="passwordForm.controls.newPassword.errors.required"
+                class="error-span">
+            Password is required
+          </span>
+          </div>
+          <div>
+          <span *ngIf="passwordForm.controls.newPassword.errors.strong"
+                class="error-span">
+            <ul>
+              <li>Min 8 chars</li>
+              <li>Lowercase letters</li>
+              <li>Uppercase letters</li>
+              <li>Numbers</li>
+              <li>Special characters</li>
+            </ul>
+          </span>
+          </div>
+        </div>
+      </div>
+      <button [ngClass]="passwordForm.invalid &&  passwordForm.touched? 'button-invalid' : 'button'" type="submit" [disabled]="passwordForm.invalid">Change password</button>
+      <p>
+          <span *ngIf="passwordForm.invalid && passwordForm.touched"
+                class="error-span">
+            Form is invalid
+          </span>
+      </p>
+    </form>
+  </div>
+</div>
+<p-toast></p-toast>

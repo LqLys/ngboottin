@@ -1,0 +1,100 @@
+<div class="row">
+  <div style="grid-column: 5/7">
+    <h3>Add a new user</h3>
+    <form [formGroup]="registerForm" (submit)="onSubmit()">
+      <div>
+        <label>Name</label><br>
+        <input formControlName="name"
+               [ngClass]="{'is-invalid': registerForm.controls.name.errors && registerForm.controls.name.touched}"/>
+        <div *ngIf="registerForm.controls.name.errors && registerForm.controls.name.touched">
+          <div>
+          <span *ngIf="registerForm.controls.name.errors.required"
+                class="error-span">
+            Name is required
+          </span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <label>Username</label><br>
+        <input formControlName="username"
+               [ngClass]="{'is-invalid': registerForm.controls.username.errors && registerForm.controls.username.touched}"/>
+        <div *ngIf="registerForm.controls.username.errors && registerForm.controls.username.touched">
+          <div>
+          <span *ngIf="registerForm.controls.username.errors.required"
+                class="error-span">
+            Username is required
+          </span>
+          </div>
+          <div>
+          <span *ngIf="registerForm.controls.username.errors.minlength"
+                class="error-span">
+            At least 3 chars required
+          </span>
+          </div>
+          <div>
+          <span *ngIf="registerForm.controls.username.errors.usernameTaken"
+                class="error-span">
+            Username is taken
+          </span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <label>Password</label><br>
+        <input formControlName="password" type="password"
+               [ngClass]="{'is-invalid': registerForm.controls.password.errors && registerForm.controls.password.touched}"/>
+        <div *ngIf="registerForm.controls.password.errors && registerForm.controls.password.touched">
+          <div>
+          <span *ngIf="registerForm.controls.password.errors.required"
+                class="error-span">
+            Password is required
+          </span>
+          </div>
+          <div>
+          <span *ngIf="registerForm.controls.password.errors.strong"
+                class="error-span">
+            <ul>
+              <li>Min 8 chars</li>
+              <li>Lowercase letters</li>
+              <li>Uppercase letters</li>
+              <li>Numbers</li>
+              <li>Special characters</li>
+            </ul>
+          </span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div><label>Email address</label></div>
+        <div><input formControlName="email"
+                    [ngClass]="{'is-invalid': registerForm.controls.email.errors && registerForm.controls.email.touched}"/></div>
+        <div *ngIf="registerForm.controls.email.errors && registerForm.controls.email.touched">
+          <div>
+          <span *ngIf="registerForm.controls.email.errors.required"
+                class="error-span">
+            Email is required
+          </span>
+          </div>
+          <div>
+          <span *ngIf="registerForm.controls.email.errors.email"
+                class="error-span">
+            Email must be a valid email address
+          </span>
+          </div>
+        </div>
+      </div>
+
+      <button [ngClass]="registerForm.invalid ? 'button-invalid' : 'button'" type="submit"
+              [disabled]="registerForm.invalid">Register
+      </button>
+      <p>
+          <span *ngIf="registerForm.invalid && registerForm.touched"
+                class="error-span">
+            Form is invalid
+          </span>
+      </p>
+    </form>
+  </div>
+</div>
+<p-toast></p-toast>
