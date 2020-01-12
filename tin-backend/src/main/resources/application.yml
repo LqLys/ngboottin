@@ -26,3 +26,7 @@ spring:
     roles-query: "select u.email, r.name from users u inner join user_role ur on(u.id=ur.user_id) inner join roles r on(ur.role_id=r.id) where u.email=?"
 cors:
   enabled: true
+
+PORT: 8080
+server:
+  port: ${PORT}
