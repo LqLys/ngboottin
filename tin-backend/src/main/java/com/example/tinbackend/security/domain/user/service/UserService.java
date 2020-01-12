@@ -2,14 +2,12 @@ package com.example.tinbackend.security.domain.user.service;
 
 import com.example.tinbackend.security.domain.role.entity.RoleEntity;
 import com.example.tinbackend.security.domain.role.repository.RoleRepository;
-import com.example.tinbackend.security.domain.user.dto.AddUserDto;
-import com.example.tinbackend.security.domain.user.dto.ChangePasswordDto;
-import com.example.tinbackend.security.domain.user.dto.EditUserDto;
-import com.example.tinbackend.security.domain.user.dto.UserDto;
+import com.example.tinbackend.security.domain.user.dto.*;
 import com.example.tinbackend.security.domain.user.entity.UserEntity;
 import com.example.tinbackend.security.domain.user.mapper.UserMapper;
 import com.example.tinbackend.security.domain.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service("userService")
 public class UserService {
@@ -42,6 +41,18 @@ public class UserService {
 
     public UserDto saveUser(AddUserDto addUserDto) {
         RoleEntity userRole = roleRepository.findByName("USER");
+        UserEntity user = UserEntity.builder()
+                .active(true)
+                .email(addUserDto.getEmail())
+                .name(addUserDto.getName())
+                .username(addUserDto.getUsername())
+                .password(encoder.encode(addUserDto.getPassword()))
+                .roles(new ArrayList<>(Arrays.asList(userRole)))
+                .build();
+        return userMapper.map(userRepository.save(user), UserDto.class);
+    }
+    public UserDto saveUser(AddUserDto addUserDto, String role) {
+        RoleEntity userRole = roleRepository.findByName(role);
         UserEntity user = UserEntity.builder()
                 .active(true)
                 .email(addUserDto.getEmail())
@@ -102,6 +113,23 @@ public class UserService {
         }
 
 
+    }
+
+    public List<String> getUserRoles(String username) {
+        final UserEntity user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("username %s not found", username)));
+        return user.getRoles().stream().map(RoleEntity::getName).collect(Collectors.toList());
+    }
+
+    public void setUserRoles(SetUserRolesDto setUserRoles) {
+        final UserEntity user = userRepository.findByUsername(setUserRoles.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("username %s not found", setUserRoles.getUsername())));
+
+        List<RoleEntity> roles = setUserRoles.getRoles().stream()
+                .map(roleRepository::findByName)
+                .collect(Collectors.toList());
+        user.setRoles(roles);
+        userRepository.save(user);
     }
 
 //    public UserDto addUser(AddUserDto addUserDto) {

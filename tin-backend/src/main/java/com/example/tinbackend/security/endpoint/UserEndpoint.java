@@ -1,9 +1,6 @@
 package com.example.tinbackend.security.endpoint;
 
-import com.example.tinbackend.security.domain.user.dto.AddUserDto;
-import com.example.tinbackend.security.domain.user.dto.ChangePasswordDto;
-import com.example.tinbackend.security.domain.user.dto.EditUserDto;
-import com.example.tinbackend.security.domain.user.dto.UserDto;
+import com.example.tinbackend.security.domain.user.dto.*;
 import com.example.tinbackend.security.domain.user.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,6 +46,17 @@ public class UserEndpoint {
     @PutMapping("/change-password")
     public void changePassword(@Valid @RequestBody ChangePasswordDto changePasswordDto) {
         userService.changePassword(changePasswordDto);
+    }
+
+    @GetMapping("/{username}/roles")
+    public List<String> getUserRoles(@PathVariable("username") String username){
+        return userService.getUserRoles(username);
+    }
+
+    @PutMapping("/{username}/roles")
+    public void setUserRoles(@RequestBody SetUserRolesDto setUserRoles){
+        userService.setUserRoles(setUserRoles);
+
     }
 
 

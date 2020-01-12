@@ -47,8 +47,8 @@ public class InitDataLoader {
 
         AddUserDto jacek = new AddUserDto("jacek","jacek", "jacek@wp.pl", "123Qwert|");
         AddUserDto janek = new AddUserDto("janek","janek", "janek@wp.pl", "123Qwert|");
-        userService.saveUser(jacek);
-        userService.saveUser(janek);
+        userService.saveUser(jacek, "ADMIN");
+        userService.saveUser(janek, "USER");
 
         AddGroupWithUsersDto addGroup = AddGroupWithUsersDto.builder()
                 .name("warszawa")
