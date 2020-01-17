@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {TripsFacade} from '../../../../trips/facades/trips.facade';
 import {Router} from '@angular/router';
 import {ExpensesFacade} from '../../../facades/expenses.facade';
 import {AuthService} from "../../../../auth/services/auth.service";
@@ -27,7 +26,7 @@ export class ExpensesListComponent implements OnInit {
       {field: 'destination', header: 'destination'},
       {field: 'startDate', header: 'start date'},
       {field: 'endDate', header: 'end date'},
-      {field: 'settledBalance', header: 'actions'}
+      {field: 'settledBalance', header: 'settled balance'}
     ];
   }
 
@@ -40,4 +39,11 @@ export class ExpensesListComponent implements OnInit {
     this.router.navigateByUrl('/admin/edit-user/' + id);
   }
 
+  getExpenseStyle(value: any, field: any) {
+    let style = {'backgroundColor': 'white'};
+    if(field === 'settledBalance'){
+      style.backgroundColor = +value < 0 ? '#f74a4a': '#0ee32a';
+    }
+    return style;
+  }
 }
